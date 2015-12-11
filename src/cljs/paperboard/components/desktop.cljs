@@ -10,5 +10,5 @@
     om/IRender
     (render [this]
       (let [cols (:columns data)]
-      (apply dom/div #js {:className "desktop"}
-             (om/build-all column cols {:key :id}))))))
+        (apply dom/div #js {:className "desktop"}
+               (om/build-all column cols {:key :id}))))))

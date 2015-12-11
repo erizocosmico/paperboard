@@ -25,7 +25,7 @@
     (will-mount [_]
       (let [ch (:req-ch (om/get-shared owner))]
         (go 
-      (.log js/console (:url data) "is requesting")
+          (.log js/console (:url data) "is requesting")
           (>! ch {:type (:kind data)
                   :id (:id data)
                   :url (:url data)}))))
@@ -68,39 +68,39 @@
 
 (defmethod column :add
   [data owner]
-   (reify
-     om/IInitState
-     (init-state [_]
-       {:open false
-        :title ""
-        :url ""
-        :col-type :reddit})
-     om/IRenderState
-     (render-state [this {:keys [open title url col-type]}]
-       (dom/div #js {:className "column column--add"}
-                (dom/div #js {:className (str "column__add" (if open " hidden" ""))}
-                         (dom/button #js {:onClick #(om/set-state! owner :open (not open))} 
-                                     "+"))
-                (dom/div #js {:className (str "column__add-form" (if open "" " hidden"))}
-                         (dom/form #js {:onSubmit #(.preventDefault %)}
-                                   (dom/div #js {:className "form-field"}
-                                            (dom/label #js {:htmlFor "title"}
-                                                       "Column title")
-                                            (dom/input 
-                                              #js {:type "text" 
-                                                   :value (om/value title)
-                                                   :name "title"
-                                                   :onChange #(handle-change % :title owner)}))
-                                   (dom/div #js {:className "form-field"}
-                                            (dom/label #js {:htmlFor "url"}
-                                                       (label-for-type col-type))
-                                            (dom/input
-                                              #js {:type "url"
-                                                   :name "url"
-                                                   :value (om/value url)
-                                                   :onChange #(handle-change % :url owner)}))
-                                   (dom/button 
-                                     #js {:onClick (fn [_]
-                                                     (add-column owner title url col-type)
-                                                     (reset-form owner))}
-                                     "Create column")))))))
+  (reify
+    om/IInitState
+    (init-state [_]
+      {:open false
+       :title ""
+       :url ""
+       :col-type :reddit})
+    om/IRenderState
+    (render-state [this {:keys [open title url col-type]}]
+      (dom/div #js {:className "column column--add"}
+               (dom/div #js {:className (str "column__add" (if open " hidden" ""))}
+                        (dom/button #js {:onClick #(om/set-state! owner :open (not open))} 
+                                    "+"))
+               (dom/div #js {:className (str "column__add-form" (if open "" " hidden"))}
+                        (dom/form #js {:onSubmit #(.preventDefault %)}
+                                  (dom/div #js {:className "form-field"}
+                                           (dom/label #js {:htmlFor "title"}
+                                                      "Column title")
+                                           (dom/input 
+                                            #js {:type "text" 
+                                                 :value (om/value title)
+                                                 :name "title"
+                                                 :onChange #(handle-change % :title owner)}))
+                                  (dom/div #js {:className "form-field"}
+                                           (dom/label #js {:htmlFor "url"}
+                                                      (label-for-type col-type))
+                                           (dom/input
+                                            #js {:type "url"
+                                                 :name "url"
+                                                 :value (om/value url)
+                                                 :onChange #(handle-change % :url owner)}))
+                                  (dom/button 
+                                   #js {:onClick (fn [_]
+                                                   (add-column owner title url col-type)
+                                                   (reset-form owner))}
+                                   "Create column")))))))
