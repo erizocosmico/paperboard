@@ -37,6 +37,7 @@
   [cursor id]
   "Not implemented yet")
 
+;; TODO: Update only those that don't already exist!
 (defn update-col-news
   "Returns a function to update the news in a column"
   [id news]

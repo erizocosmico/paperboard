@@ -32,3 +32,8 @@
                                      :preamble             ["react/react.min.js"]}}]
                 :figwheel-server server}]
     (fig-auto/autobuild* config)))
+
+(defn start-less []
+  (future
+    (println "Starting less.")
+    (sh "lein" "less" "auto")))

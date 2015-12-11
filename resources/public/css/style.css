@@ -1,3 +1,273 @@
-h1 {
-  text-decoration: underline;
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+* {
+  outline: none;
+  box-sizing: border-box;
+}
+body,
+html {
+  padding: 0;
+  margin: 0;
+  font-family: 'Roboto', 'Helvetica Neue', Helvetica, sans-serif;
+}
+.desktop {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  padding: 1em 0;
+  background-color: #ececec;
+  overflow-x: auto;
+  display: flex;
+  perspective: 1000;
+  -webkit-perspective: 1000;
+}
+.column {
+  height: 100%;
+  min-height: 100%;
+  display: inline-block;
+  position: relative;
+  width: 28%;
+  min-width: 350px;
+  max-width: 500px;
+  margin: 0 1.8em;
+  background-color: white;
+  vertical-align: top;
+  overflow: hidden;
+  border-radius: 2px;
+  box-shadow: 0 0.1em 5px rgba(0, 0, 0, 0.3);
+}
+.column + .column {
+  margin-left: 0;
+}
+.column--add {
+  width: 250px;
+  min-width: 250px;
+  box-shadow: none;
+  border: none;
+  background: transparent;
+}
+.column--add .hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+.column__add button {
+  border: none;
+  background: transparent;
+  font-size: 5em;
+  color: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+}
+.column__add-form {
+  transition: opacity 300ms ease-in-out;
+}
+.column__add-form .form-field {
+  margin: 1em 0;
+}
+.column__add-form .form-field label {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 1.2em;
+  color: rgba(0, 0, 0, 0.5);
+}
+.column__add-form .form-field input {
+  width: 100%;
+  background: transparent;
+  padding: .5em;
+  font-size: 1em;
+  border: none;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+  transition: all 200ms ease-in;
+}
+.column__add-form .form-field input:focus,
+.column__add-form .form-field input:hover {
+  border-bottom-color: #3169f5;
+}
+.column__add-form button {
+  width: 96%;
+  display: block;
+  padding: 1em;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: none;
+  border-radius: 4px;
+  color: white;
+  text-transform: uppercase;
+  font-size: .9em;
+  letter-spacing: .05em;
+  transition: all 200ms ease-in-out;
+  cursor: pointer;
+  margin: 0 2%;
+}
+.column__add-form button:hover,
+.column__add-form button:active {
+  background-color: #3169f5;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+.column__header {
+  background-color: #3169f5;
+  border-bottom: 1px solid #0b4ae8;
+  height: 50px;
+  padding: .95em 1em;
+  font-family: 'Roboto Condensed', 'Roboto', sans-serif;
+}
+.column__header p {
+  font-weight: 300;
+  font-size: 1.3em;
+  color: white;
+}
+ul.column__items {
+  overflow-y: auto;
+  position: absolute;
+  top: 50px;
+  bottom: 0;
+  width: 100%;
+}
+ul.column__items li {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 1em;
+}
+ul.column__items li a {
+  text-decoration: none;
+  color: #666666;
+  display: block;
+  line-height: 1.5em;
+}
+ul.column__items li a:visited {
+  color: #a6a6a6;
+}
+ul.column__items li:hover {
+  background-color: #f5f5ff;
+}
+ul.column__items li:hover a {
+  color: black;
 }

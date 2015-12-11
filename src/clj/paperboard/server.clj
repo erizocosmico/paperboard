@@ -1,6 +1,6 @@
 (ns paperboard.server
   (:require [clojure.java.io :as io]
-            [paperboard.dev :refer [is-dev? inject-devmode-html browser-repl start-figwheel]]
+            [paperboard.dev :refer [is-dev? inject-devmode-html browser-repl start-figwheel start-less]]
             [compojure.core :refer [GET defroutes]]
             [compojure.route :refer [resources]]
             [net.cgrand.enlive-html :refer [deftemplate]]
@@ -31,7 +31,8 @@
 
 (defn run-auto-reload [& [port]]
   (auto-reload *ns*)
-  (start-figwheel))
+  (start-figwheel)
+  (start-less))
 
 (defn run [& [port]]
   (when is-dev?

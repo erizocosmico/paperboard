@@ -12,3 +12,6 @@
   (throw (Exception. "Browser connected REPL is not available in prod mode")))
 (defn start-figwheel []
   (throw (Exception. "Figwheel is not available in prod mode")))
+
+(defn start-less []
+  (throw (Exception. "less is not available in prod mode")))
