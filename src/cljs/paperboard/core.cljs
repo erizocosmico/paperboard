@@ -2,6 +2,7 @@
   (:require [om.core :as om]
             [om.dom :as dom]
             [paperboard.services.news :as news]
+            [paperboard.services.storage :refer [store retrieve]]
             [paperboard.components.desktop :refer [desktop]]
             [cljs.core.async :refer [chan <! >! close!]])
   (:require-macros [cljs.core.async.macros :refer [go]]))
@@ -42,8 +43,9 @@
   (fn [cols]
     (map (fn [col] 
            (if (= (:id col) id) 
-             (assoc col :items 
-                    (vec (concat (:items news) (:items col))))
+             (assoc col
+                  :items (vec (concat (:items news) (:items col)))
+                    :last-update (/ (.getTime (js/Date.)) 1000))
              col)) cols)))
 
 (defmulti dispatch (fn [kind] kind))
@@ -66,7 +68,12 @@
                 news (<! (news/get-news kind url))]
             (om/transact! cursor [:columns] (update-col-news id news)))))))
 
-(defonce app-state (atom {:columns [(make-add-col)]}))
+(defn- initial-columns
+  []
+  (let [cols (retrieve "columns" nil)]
+    (if (nil? cols) [(make-add-col)] cols)))
+
+(defonce app-state (atom {:columns (initial-columns)}))
 
 (defn main []
   (let [req-ch (chan)
@@ -74,17 +81,9 @@
     (om.core/root
      (fn [app owner]
        (reify
-         ;; TODO: Remove this when localStorage actually works
-         om/IDidMount
-         (did-mount [_]
-           (go (>! col-ch {:type :add 
-                           :kind :reddit 
-                           :url "https://www.reddit.com/r/golang.json"
-                           :title "/r/golang"})
-               (>! col-ch {:type :add 
-                           :kind :reddit 
-                           :url "https://www.reddit.com/r/rust.json"
-                           :title "/r/rust"})))
+         om/IDidUpdate
+         (did-update [_ _ _]
+           (store "columns" (:columns app)))
          om/IWillMount
          (will-mount [_]
            (dispatch :req req-ch app)

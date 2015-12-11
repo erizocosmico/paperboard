@@ -3,24 +3,24 @@
             [cljs.core.async :refer [chan close! <!]])
   (:require-macros [cljs.core.async.macros :refer [go]]))
 
-(defn paged-reddit-url
+(defn- paged-reddit-url
   "Returns the given URL of a subreddit with the proper pagination"
   [url after]
   (str url "?limit=25&after=" after))
 
-(defn paged-rss-url
+(defn- paged-rss-url
   "Returns the given URL of a RSS feed with the proper pagination"
   [url page]
   "not implemented yet")
 
-(defn paged-url
+(defn- paged-url
   "Returns the given URL with the proper pagination added to it"
   [col-type url page]
   (case col-type
     :reddit (paged-reddit-url url page)
     :rss    (paged-rss-url url page)))
 
-(defn reddit-post-to-item
+(defn- reddit-post-to-item
   "Converts the JSON result of a reddit post to the item format"
   [post]
   (let [data (get post "data")]
@@ -29,7 +29,7 @@
      :url      (get data "url")
      :title    (get data "title")}))
 
-(defn get-reddit
+(defn- get-reddit
   "Retrieves the feed with the latest news of a subreddit"
   [url]
   (let [ch (chan 1)]
@@ -39,7 +39,7 @@
           (close! ch)))
     ch))
 
-(defn get-rss
+(defn- get-rss
   "Retrieves the feed with the latest news of a RSS feed"
   [url]
   "not implemented yet")

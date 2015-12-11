@@ -23,12 +23,12 @@
   (reify
     om/IWillMount
     (will-mount [_]
+      (when (< (+ (:last-update data) 3600) (/ (.getTime (js/Date.)) 1000))
       (let [ch (:req-ch (om/get-shared owner))]
         (go 
-          (.log js/console (:url data) "is requesting")
           (>! ch {:type (:kind data)
                   :id (:id data)
-                  :url (:url data)}))))
+                  :url (:url data)})))))
     om/IRender
     (render [_]
       (dom/div #js {:className "column" :key (:id data)}
@@ -54,10 +54,7 @@
 (defn reset-form
   "Empties the form"
   [owner]
-  (om/set-state! owner :title "")
-  (om/set-state! owner :url "")
-  (om/set-state! owner :type :reddit)
-  (om/set-state! owner :open false))
+  (om/set-state! owner {:title "" :url "" :col-type :reddit :open false}))
 
 (defn label-for-type
   "Returns the correct label for the URL input depending on the selected column type"
@@ -76,7 +73,7 @@
        :url ""
        :col-type :reddit})
     om/IRenderState
-    (render-state [this {:keys [open title url col-type]}]
+    (render-state [_ {:keys [open title url col-type]}]
       (dom/div #js {:className "column column--add"}
                (dom/div #js {:className (str "column__add" (if open " hidden" ""))}
                         (dom/button #js {:onClick #(om/set-state! owner :open (not open))} 
