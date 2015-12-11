@@ -9,5 +9,6 @@
   (reify
     om/IRender
     (render [this]
-      (dom/div #js {:className "desktop"}
-               (om/build-all column (:columns data))))))
+      (let [cols (:columns data)]
+      (apply dom/div #js {:className "desktop"}
+             (om/build-all column cols {:key :id}))))))
