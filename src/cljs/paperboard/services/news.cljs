@@ -24,7 +24,8 @@
   "Converts the JSON result of a reddit post to the item format"
   [post]
   (let [data (get post "data")]
-    {:type     :reddit
+    {:id       (get data "id")
+     :type     :reddit
      :comments (str "http://reddit.com" (get data "permalink"))
      :url      (get data "url")
      :title    (get data "title")}))

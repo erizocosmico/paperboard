@@ -24,17 +24,18 @@
     om/IWillMount
     (will-mount [_]
       (when (< (+ (:last-update data) 3600) (/ (.getTime (js/Date.)) 1000))
-      (let [ch (:req-ch (om/get-shared owner))]
-        (go 
-          (>! ch {:type (:kind data)
-                  :id (:id data)
-                  :url (:url data)})))))
+        (let [ch (:req-ch (om/get-shared owner))]
+          (go 
+            (>! ch {:type (:kind data)
+                    :id (:id data)
+                    :url (:url data)})))))
     om/IRender
     (render [_]
       (dom/div #js {:className "column" :key (:id data)}
                (om/build column-header data)
                (apply dom/ul #js {:className "column__items"}
-                      (om/build-all item (:items data)))))))
+                      (om/build-all item (:items data) 
+                                    {:key :id}))))))
 
 (defn handle-change
   "Handles the onChange event of an input setting to the value the given key"
