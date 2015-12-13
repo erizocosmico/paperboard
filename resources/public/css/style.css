@@ -263,12 +263,12 @@ html,
   padding: .2em .2em;
   text-transform: uppercase;
   letter-spacing: .03em;
-  border-radius: 4px;
+  border-radius: 3px;
   cursor: pointer;
   transition: all 200ms linear;
 }
 .topbar__add-col:hover {
-  box-shadow: 0 0.1em 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0.1em 4px rgba(0, 0, 0, 0.3);
 }
 .desktop {
   position: fixed;

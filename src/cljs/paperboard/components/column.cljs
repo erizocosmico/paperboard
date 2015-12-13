@@ -9,8 +9,8 @@
   "The column header is the component that has"
   [data owner]
   (reify
-    om/IRender
-    (render [_]
+    om/IRenderState
+    (render-state [_ {:keys [col-name]}]
       (dom/div #js {:className "column__header"}
                (dom/span #js {:className 
                               (str "column__header__icon pb-icon pb-icon--" (name (:kind data)))})

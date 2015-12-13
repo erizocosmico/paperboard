@@ -1,14 +1,10 @@
 (ns paperboard.components.add-column-modal
   (:require [om.core :as om]
             [paperboard.components.modal :refer [modal]]
+            [paperboard.components.forms :refer [handle-change]]
             [cljs.core.async :refer [>!]]
             [om.dom :as dom])
   (:require-macros [cljs.core.async.macros :refer [go]]))
-
-(defn handle-change
-  "Handles the onChange event of an input setting to the value the given key"
-  [e k owner]
-  (om/set-state! owner k (.. e -target -value)))
 
 (defn add-column
   "Sends a request to add a new column through the column channel"
