@@ -7,14 +7,17 @@
 
 (enable-console-print!)
 
-(defonce app-state (atom {:columns (initial-columns)}))
+(defonce app-state (atom {:columns        (initial-columns)
+                          :show-add-modal false}))
 
 (defn main []
   (let [req-ch (chan)
-        col-ch (chan)]
+        col-ch (chan)
+        action-ch (chan)]
     (om.core/root
-     (make-main-app req-ch col-ch)
+     (make-main-app req-ch col-ch action-ch)
      app-state
      {:shared {:req-ch req-ch
-               :col-ch col-ch}
+               :col-ch col-ch
+               :action-ch action-ch}
       :target (.getElementById js/document "app")})))

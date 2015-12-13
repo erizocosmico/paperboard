@@ -6,9 +6,9 @@
 (defn desktop
   "desktop component is the area containing all user columns"
   [data owner]
-  (reify
+  (reify 
     om/IRender
-    (render [this]
+    (render [_]
       (let [cols (:columns data)]
         (apply dom/div #js {:className "desktop"}
                (om/build-all column cols {:key :id}))))))

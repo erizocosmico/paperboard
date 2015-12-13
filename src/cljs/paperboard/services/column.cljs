@@ -7,15 +7,10 @@
   [args]
   {:id (.getTime (js/Date.))
    :items []
-   :type :normal
    :kind (:kind args)
    :title (:title args)
    :url (:url args)
    :last-update 0})
-
-(defn make-add-col
-  "Creates an empty column to add columns"
-  [] {:id (.getTime (js/Date.)) :type :add})
 
 (defn add-col
   "Adds a new column to the app"
@@ -48,7 +43,7 @@
     (map (fn [col] 
            (if (= (:id col) id) 
              (assoc col
-                    :items (merge-news news (:items col))
+                    :items (merge-news (:items news) (:items col))
                     :last-update (/ (.getTime (js/Date.)) 1000))
              col)) cols)))
 
@@ -62,6 +57,6 @@
   localStorage they will be retrieved from there."
   [] (let [cols (retrieve "columns" nil)]
        (if (nil? cols)
-         [(make-add-col)]
+         []
          (vec (map initial-col cols)))))
 

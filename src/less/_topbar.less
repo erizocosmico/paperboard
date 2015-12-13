@@ -1,0 +1,40 @@
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 50px;
+  background-color: white;
+  z-index: 990;
+  box-shadow: 1px 0 0 rgba(0, 0, 0, .1);
+  text-align: center;
+  
+  & > h1 {
+    font-family: 'Roboto Slab', 'Roboto', sans-serif;
+    color: #6c616a;
+    padding: .7em .25em;
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+  }
+} 
+
+.topbar__add-col {
+  top: 9px;
+  right: 15px;
+  border: none;
+  font-size: 1.5em;
+  font-weight: 300;
+  background-color: #03aa67;
+  color: white;
+  padding: .2em .2em;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 200ms linear;
+
+  &:hover {
+    box-shadow: 0 .1em 4px rgba(0, 0, 0, .2);
+  }
+}

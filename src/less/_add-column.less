@@ -1,0 +1,78 @@
+.add-col-form {
+  padding: 1em;
+  width: 450px;
+
+  h2 {
+    font-size: 1.5em;
+    font-weight: 300;
+    text-align: center;
+    margin: .5em 0 1em 0;
+    color: #6c616a;
+  }
+
+  .form-field {
+    width: 100%;
+    margin-bottom: 1.3em;
+    
+    & > input {
+      display: block;
+      width: 100%;
+      border: none;
+      border: 2px solid #DDD;
+      font-size: 1.1em;
+      padding: .6em 1em;
+      border-radius: 4px;
+      transition: border 200ms linear;
+
+      &:focus {
+        border-color: lighten(#6c616a, 20%);
+      }
+    }
+  }
+}
+
+.form-buttons {
+  padding: .5em 0;
+  text-align: center;
+  
+  .btn + .btn {
+    margin-left: 1em;
+  }
+}
+
+.btn {
+  font-size: .95em;
+  border: none;
+  border-radius: 3px;
+  padding: .7em 1.5em;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.btn--link {
+  background: transparent;
+  color: #6c616a;
+  transition: all 200ms ease-in;
+
+  &:hover {
+    border-color: rgba(0, 0, 0, .1);
+  }
+
+  &:active {
+    background-color: rgba(0, 0, 0, .1);
+  }
+}
+
+.btn--primary {
+  background-color: #03aa67;
+  color: white;
+  transition: all 200ms ease-in-out;
+
+  &:hover {
+    box-shadow: 0 .1em 4px rgba(0, 0, 0, .4);
+  }
+
+  &:active {
+    box-shadow: 0 0 4px rgba(0, 0, 0, .3) inset;
+  }
+}

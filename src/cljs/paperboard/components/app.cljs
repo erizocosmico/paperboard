@@ -5,6 +5,8 @@
             [paperboard.services.column :as column]
             [paperboard.services.news :refer [get-news]]
             [paperboard.components.desktop :refer [desktop]]
+            [paperboard.components.topbar :refer [topbar]]
+            [paperboard.components.add-column-modal :refer [add-column-modal]]
             [cljs.core.async :refer [chan <! >! close!]])
   (:require-macros [cljs.core.async.macros :refer [go]]))
 
@@ -15,7 +17,7 @@
   (go (while true
         (let [args (<! ch)]
           (case (:type args)
-            :add (column/add-col cursor args)
+            :add    (column/add-col cursor args)
             :delete (column/remove-col cursor (:id args)))))))
 
 (defmethod dispatch :req
@@ -29,9 +31,20 @@
             (om/transact! cursor [:columns] 
                           (column/update-col-news id news)))))))
 
+(defn- toggle-add-modal
+  [cursor]
+  (om/transact! cursor [:show-add-modal] #(not %)))
+
+(defmethod dispatch :action
+  [_ ch cursor]
+  (go (while true
+        (let [args (<! ch)]
+          (case (:type args)
+            :toggle-add-modal (toggle-add-modal cursor))))))
+
 (defn make-main-app
   "Returns a function to create a main app, that is the root container of the application"
-  [req-ch col-ch]
+  [req-ch col-ch action-ch]
   (fn [app owner]
     (reify
       om/IDidUpdate
@@ -39,14 +52,19 @@
         (store "columns" (:columns app)))
       om/IWillMount
       (will-mount [_]
-        (dispatch :req req-ch app)
-        (dispatch :col col-ch app))
+        (dispatch :req    req-ch app)
+        (dispatch :col    col-ch app)
+        (dispatch :action action-ch app))
       om/IWillUnmount
       (will-unmount [_]
         (close! req-ch)
+        (close! action-ch)
         (close! col-ch))
       om/IRender
       (render [_]
         (.log js/console (clj->js app))
-        (om/build desktop app)))))
+        (dom/div #js {:className "app"}
+                 (om/build topbar app)
+                 (om/build desktop app)
+                 (om/build add-column-modal app))))))
 
