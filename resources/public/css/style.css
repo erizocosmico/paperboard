@@ -272,11 +272,11 @@ html,
 }
 .desktop {
   position: fixed;
-  left: 50px;
+  left: 0;
   top: 0;
   bottom: 0;
   width: 100%;
-  padding: 1em 0;
+  padding: 1em 0 1em 50px;
   background-color: #d2c7d0;
   overflow-x: auto;
   display: flex;

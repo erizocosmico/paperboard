@@ -25,13 +25,13 @@
     om/IRender 
     (render [_]
       (let [id (:id data)]
-      (dom/div #js {:className "column__actions"}
-               (dom/button #js {:className "action-left pb-icon pb-icon--arrow-left"
-                                :onClick #(move-col :left id owner)})
-               (dom/button #js {:className "action-right pb-icon pb-icon--arrow-right"
-                                :onClick #(move-col :right id owner)})
-               (dom/button #js {:className "action-remove pb-icon pb-icon--delete"
-                                :onClick #(delete-col id owner)}))))))
+        (dom/div #js {:className "column__actions"}
+                 (dom/button #js {:className "action-left pb-icon pb-icon--arrow-left"
+                                  :onClick #(move-col :left id owner)})
+                 (dom/button #js {:className "action-right pb-icon pb-icon--arrow-right"
+                                  :onClick #(move-col :right id owner)})
+                 (dom/button #js {:className "action-remove pb-icon pb-icon--delete"
+                                  :onClick #(delete-col id owner)}))))))
 
 (defn- column-header
   "The column header is the component that has"

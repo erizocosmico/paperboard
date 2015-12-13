@@ -6,14 +6,23 @@
             [om.dom :as dom])
   (:require-macros [cljs.core.async.macros :refer [go]]))
 
+(defn- process-url
+  "Processes the 'URL', which does not always have to be an URL, it can be a
+  subreddit in the case of reddit columns"
+  [kind url]
+  (case kind
+    :reddit (str "https://www.reddit.com/r/" url ".json")
+    url))
+
 (defn add-column
   "Sends a request to add a new column through the column channel"
   [owner title url kind]
-  (let [ch (:col-ch (om/get-shared owner))]
+  (let [ch      (:col-ch (om/get-shared owner))
+        col-url (process-url kind url)]
     (go
-      (>! ch {:type :add
-              :kind kind
-              :url url
+      (>! ch {:type  :add
+              :kind  kind
+              :url   col-url
               :title title}))))
 
 (defn toggle-add-modal
