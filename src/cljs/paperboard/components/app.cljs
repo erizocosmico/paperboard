@@ -17,8 +17,12 @@
   (go (while true
         (let [args (<! ch)]
           (case (:type args)
-            :add    (column/add-col cursor args)
-            :delete (column/remove-col cursor (:id args)))))))
+            :add    (om/transact! cursor [:columns]
+                                  #(column/add-col % args))
+            :delete (om/transact! cursor [:columns] 
+                                  #(column/remove-col % (:id args)))
+            :move   (om/transact! cursor [:columns]
+                                  #(column/move-col % (:id args) (:dir args))))))))
 
 (defmethod dispatch :req
   [_ ch cursor]

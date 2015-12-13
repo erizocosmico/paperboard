@@ -14,14 +14,37 @@
 
 (defn add-col
   "Adds a new column to the app"
-  [cursor args]
+  [cols args]
   (let [col (make-col args)]
-    (om/transact! cursor [:columns] #(vec (concat [col] %)))))
+    (vec (concat [col] cols))))
 
 (defn remove-col
-  "Removes a column from the app"
-  [cursor id]
-  "Not implemented yet")
+  "Removes a column from the list"
+  [cols id]
+  (filterv (fn [c]
+             (not (= (:id c) id))) cols))
+
+(defn move-col
+  "Moves a column to the right or to the left"
+  [cols id dir]
+  (loop [result [] remaining cols]
+    (if (= (count remaining) 0)
+      result
+      (let [col  (first remaining)
+            tail (rest remaining)]
+        (if (= (:id col) id)
+          (case dir
+            :left (if (= (count result) 0)
+                    remaining
+                    (recur 
+                     (conj (vec (butlast result)) col (last result))
+                     tail))
+            :right (if (= (count tail) 0)
+                     (conj result col)
+                     (recur
+                      (conj result (first tail) col)
+                      (rest tail))))
+          (recur (conj result col) tail))))))
 
 (defn merge-news
   "Merges two vectors of news taking care that there are no duplicates"
