@@ -34,12 +34,12 @@
 (defn reset-form
   "Empties the form"
   [owner]
-  (om/set-state! owner {:title "" :url "" :col-type :reddit :open false}))
+  (om/set-state! owner {:title "" :url "" :col-type "rss"}))
 
 (defn label-for-type
   "Returns the correct label for the URL input depending on the selected column type"
   [col-type]
-  (case col-type 
+  (case (keyword col-type) 
     :reddit "Subreddit name"
     :rss "RSS Feed URL"))
 
@@ -51,7 +51,7 @@
     (init-state [_]
       {:title ""
        :url ""
-       :col-type :reddit})
+       :col-type "rss"})
     om/IRenderState
     (render-state [_ {:keys [title url col-type]}]
       (modal (:show-add-modal data)
@@ -64,6 +64,11 @@
                                       :name "title"
                                       :placeholder "Column title"
                                       :onChange #(handle-change % :title owner)}))
+                       (dom/div #js {:className "form-field select-field"}
+                                (dom/select #js {:onChange #(handle-change % :col-type owner)
+                                                 :value (om/value col-type)}
+                                            (dom/option #js {:value "rss"} "RSS Feed")
+                                            (dom/option #js {:value "reddit"} "Subreddit feed")))
                        (dom/div #js {:className "form-field"}
                                 (dom/input
                                  #js {:type "text"
@@ -79,7 +84,7 @@
                                             "Cancel")
                                 (dom/button #js {:className "btn btn--primary"
                                                  :onClick (fn [_]
-                                                            (add-column owner title url col-type)
+                                                            (add-column owner title url (keyword col-type))
                                                             (toggle-add-modal owner)
                                                             (reset-form owner))}
                                             "Add column")))))))

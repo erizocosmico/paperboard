@@ -458,7 +458,8 @@ ul.column__items li:hover a {
   width: 100%;
   margin-bottom: 1.3em;
 }
-.add-col-form .form-field > input {
+.add-col-form .form-field > input,
+.add-col-form .form-field > select {
   display: block;
   width: 100%;
   border: none;
@@ -467,9 +468,28 @@ ul.column__items li:hover a {
   padding: .6em 1em;
   border-radius: 4px;
   transition: border 200ms linear;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  position: relative;
 }
-.add-col-form .form-field > input:focus {
+.add-col-form .form-field > input:focus,
+.add-col-form .form-field > select:focus {
   border-color: #9f949d;
+}
+.add-col-form .select-field {
+  position: relative;
+}
+.add-col-form .select-field::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  border-style: solid;
+  border-width: 5px 6px 0 6px;
+  border-color: #6c616a transparent transparent transparent;
+  right: 10px;
+  top: 50%;
+  margin-top: -3px;
 }
 .form-buttons {
   padding: .5em 0;

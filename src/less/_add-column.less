@@ -14,7 +14,7 @@
     width: 100%;
     margin-bottom: 1.3em;
     
-    & > input {
+    & > input, & > select {
       display: block;
       width: 100%;
       border: none;
@@ -23,11 +23,32 @@
       padding: .6em 1em;
       border-radius: 4px;
       transition: border 200ms linear;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      position: relative;
 
       &:focus {
         border-color: lighten(#6c616a, 20%);
       }
     }
+
+  }
+
+  .select-field {
+    position: relative;
+  }
+
+  .select-field::after {
+    content: " ";
+    display: block;
+    position: absolute;
+    border-style: solid;
+    border-width: 5px 6px 0 6px;
+    border-color: #6c616a transparent transparent transparent;
+    right: 10px;
+    top: 50%;
+    margin-top: -3px;
   }
 }
 
