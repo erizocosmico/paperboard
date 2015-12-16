@@ -231,6 +231,19 @@ html,
   font-family: 'Roboto', 'Helvetica Neue', Helvetica, sans-serif;
   height: 100%;
   width: 100%;
+}
+html,
+body {
+  overflow: hidden;
+  position: relative;
+}
+.app,
+#app {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   overflow: auto;
 }
 .topbar {
