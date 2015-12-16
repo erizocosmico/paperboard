@@ -36,7 +36,7 @@
   (let [ch (chan 1)]
     (go (let [data (get (<! (http/get-json url)) "data")]
           (>! ch {:next-page (get data "after")
-                  :items     (map reddit-post-to-item (get data "children"))})
+                  :items     (mapv reddit-post-to-item (get data "children"))})
           (close! ch)))
     ch))
 
