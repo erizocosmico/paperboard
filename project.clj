@@ -11,8 +11,12 @@
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [org.clojure/clojurescript "0.0-3058" :scope "provided"]
                  [org.clojure/core.async "0.2.374"]
+                 [org.clojure/data.codec "0.1.0"]
+                 [http-kit "2.1.18"]
+                 [org.clojure/data.xml "0.0.8"]
                  [ring "1.3.2"]
                  [ring/ring-defaults "0.1.4"]
+                 [ring/ring-json "0.4.0"]
                  [compojure "1.3.2"]
                  [enlive "1.1.6"]
                  [org.omcljs/om "0.8.8"]
@@ -21,11 +25,14 @@
   :plugins [[lein-cljsbuild "1.0.5"]
             [lein-environ "1.0.0"]
             [lein-cljfmt "0.3.0"]
-            [lein-less "1.7.5"]]
+            [lein-less "1.7.5"]
+            [lein-ring "0.9.7"]]
 
   :min-lein-version "2.5.0"
 
   :uberjar-name "paperboard.jar"
+
+  :ring {:handler paperboard.api/http-handler}
 
   :cljsbuild {:builds {:app {:source-paths ["src/cljs"]
                              :compiler {:output-to     "resources/public/js/app.js"
@@ -58,7 +65,7 @@
 
                    :env {:is-dev true}
 
-                   :cljsbuild {:test-commands { "test" ["phantomjs" "env/test/js/unit-test.js" "env/test/unit-test.html"] }
+                   :cljsbuild {:test-commands {"test" ["phantomjs" "env/test/js/unit-test.js" "env/test/unit-test.html"]}
                                :builds {:app {:source-paths ["env/dev/cljs"]}
                                         :test {:source-paths ["src/cljs" "test/cljs"]
                                                :compiler {:output-to     "resources/public/js/app_test.js"
@@ -67,6 +74,12 @@
                                                           :preamble      ["react/react.min.js"]
                                                           :optimizations :whitespace
                                                           :pretty-print  false}}}}}
+
+              :api {:source-paths ["env/prod/clj"]
+                       :env {:production true}
+                       :omit-source true
+                       :aot :all
+                       :main paperboard.api}             
 
              :uberjar {:source-paths ["env/prod/clj"]
                        :hooks [leiningen.cljsbuild leiningen.less]
