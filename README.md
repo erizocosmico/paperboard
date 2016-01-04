@@ -33,4 +33,22 @@ Then, build the `jar` file with leiningen.
 lein uberjar
 ```
 
+To build the frontend run this command:
+```bash
+lein with-profile uberjar cljsbuild once
+```
+
+You can copy everything under the `resources` directory and serve it statically.
+
+## Run the service
+
+You can serve the frontend statically as mentioned before, but if you really want to you can do it like this:
+```bash
+java -cp target/paperboard.jar clojure.main -m paperboard.server
+```
+
+To run the backend use this command:
+```bash
+java -cp target/paperboard.jar clojure.main -m paperboard.api
+```
 
