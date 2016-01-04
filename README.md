@@ -3,6 +3,8 @@
 Paperboard is a self-hosted tool to keep up with the headlines of the sites you are interested in. 
 The tool consists in a Kanban-like structure, with a column for every site you add. The columns can be of two types: a reddit subreddit or an RSS feed.
 
+**Note:** it is in a very early stage and errors may —and will— appear.
+
 ## Development
 
 Open a terminal and type `lein repl` to start a Clojure REPL
