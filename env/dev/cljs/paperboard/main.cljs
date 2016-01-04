@@ -11,4 +11,6 @@
 
 (weasel/connect "ws://localhost:9001" :verbose true :print #{:repl :console})
 
+(set! (.-config js/window) #js {:backend "http://localhost:3000"})
+
 (core/main)

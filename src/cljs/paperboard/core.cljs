@@ -14,7 +14,7 @@
   (let [req-ch (chan)
         col-ch (chan)
         action-ch (chan)]
-    (om.core/root
+    (om/root
      (make-main-app req-ch col-ch action-ch)
      app-state
      {:shared {:req-ch req-ch

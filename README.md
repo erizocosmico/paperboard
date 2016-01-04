@@ -11,3 +11,9 @@ In the REPL, type
 (run)
 (browser-repl)
 ```
+
+To start the backend server run:
+
+```bash
+lein run -m paperboard.api
+```

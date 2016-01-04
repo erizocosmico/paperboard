@@ -1,1 +1,1 @@
-web: java $JVM_OPTS -cp target/paperboard.jar clojure.main -m paperboard.server
+web: java $JVM_OPTS -cp target/paperboard.jar clojure.main -m paperboard.api

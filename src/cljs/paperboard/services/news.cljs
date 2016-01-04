@@ -3,6 +3,11 @@
             [cljs.core.async :refer [chan close! <!]])
   (:require-macros [cljs.core.async.macros :refer [go]]))
 
+(defn- rss-url
+  "Returns the URL of the backend to get the RSS feed of a page"
+  [url]
+  (str (.. js/window -config -backend) "/rss/" (.btoa js/window url)))
+
 (defn- paged-reddit-url
   "Returns the given URL of a subreddit with the proper pagination"
   [url after]
@@ -30,6 +35,14 @@
      :url      (get data "url")
      :title    (get data "title")}))
 
+(defn- rss-post-to-item
+  "Converts the JSON result of an rss post to the item format"
+  [post]
+  {:id    (get post "id")
+   :type  :rss
+   :url   (get post "url")
+   :title (get post "title")})
+
 (defn- get-reddit
   "Retrieves the feed with the latest news of a subreddit"
   [url]
@@ -43,7 +56,12 @@
 (defn- get-rss
   "Retrieves the feed with the latest news of a RSS feed"
   [url]
-  "not implemented yet")
+  (let [ch (chan 1)]
+    (go (let [data (<! (http/get-json (rss-url url)))]
+          (>! ch {:next-page nil
+                  :items (mapv rss-post-to-item data)})
+          (close! ch)))
+    ch))
 
 (defn get-news
   "Retrieves the items for the news column in a JSON format"
