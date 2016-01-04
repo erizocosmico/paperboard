@@ -1,8 +1,8 @@
-(defproject paperboard "0.1.0-SNAPSHOT"
+(defproject paperboard "0.5.0-SNAPSHOT"
   :description "FIXME: write description"
-  :url "http://example.com/FIXME"
-  :license {:name "Eclipse Public License"
-            :url "http://www.eclipse.org/legal/epl-v10.html"}
+  :url "https://github.com/mvader/paperboard"
+  :license {:name "MIT License"
+            :url "http://opensource.org/licenses/mit-license.php"}
 
   :source-paths ["src/clj"]
 
@@ -74,12 +74,6 @@
                                                           :preamble      ["react/react.min.js"]
                                                           :optimizations :whitespace
                                                           :pretty-print  false}}}}}
-
-              :api {:source-paths ["env/prod/clj"]
-                       :env {:production true}
-                       :omit-source true
-                       :aot :all
-                       :main paperboard.api}             
 
              :uberjar {:source-paths ["env/prod/clj"]
                        :hooks [leiningen.cljsbuild leiningen.less]
